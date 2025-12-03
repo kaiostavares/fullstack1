@@ -7,7 +7,7 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     url: 
-      jdbc:postgresql://${DS_URL:localhost}:${DS_PORT:5432}/${DS_DATABASE:sansys_database}
+      jdbc:postgresql://${DS_URL:localhost}:${DS_PORT:5432}/${DS_DATABASE:jtech_tasklist_database}
     password: ${DS_PASS:postgres}
     username: ${DS_USER:postgres}
   jpa:
@@ -22,7 +22,7 @@ management:
       exposure:
         include: '*'
 server:
-  port: ${PORT:0}
+  port: ${PORT:8081}
   forward-headers-strategy: framework
 logging:
   level:
