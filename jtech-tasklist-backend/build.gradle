@@ -62,6 +62,31 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// Task para rodar apenas testes unitários (excluindo testes de integração e e2e)
+task unitTest(type: Test) {
+	useJUnitPlatform()
+	description = 'Run unit tests only'
+	group = 'verification'
+	
+	// Exclui testes de integração e e2e
+	exclude '**/*IntegrationTest.class'
+	exclude '**/*E2ETest.class'
+	exclude '**/*IT.class'
+	exclude '**/adapters/output/persistence/**'
+}
+
+// Task para rodar testes de integração
+task integrationTest(type: Test) {
+	useJUnitPlatform()
+	description = 'Run integration tests only'
+	group = 'verification'
+	
+	// Inclui apenas testes de integração
+	include '**/*IntegrationTest.class'
+	include '**/*IT.class'
+	include '**/adapters/output/persistence/**'
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {

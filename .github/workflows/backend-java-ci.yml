@@ -38,7 +38,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew build --no-daemon
+        run: ./gradlew build -x test --no-daemon
+
+      - name: Run Unit Tests Only
+        run: ./gradlew unitTest --no-daemon
 
   dependency-submission:
     runs-on: ubuntu-latest
