@@ -5,12 +5,15 @@ import br.com.jtech.tasklist.application.core.domains.TaskStatus;
 import br.com.jtech.tasklist.application.dto.OutputDto;
 import lombok.Getter;
 
+import java.time.OffsetDateTime;
+
 @Getter
 public class TaskOutput extends OutputDto<Task> {
     private String id;
     private String name;
     private String description;
     private TaskStatus status;
+    private OffsetDateTime createdAt;
 
     public TaskOutput(Task entity) {
         super(entity);
@@ -22,6 +25,7 @@ public class TaskOutput extends OutputDto<Task> {
         this.name =  entity.getName();
         this.description = entity.getDescription();
         this.status = entity.getStatus();
+        this.createdAt = entity.getCreatedAt();
         return this;
     }
 }

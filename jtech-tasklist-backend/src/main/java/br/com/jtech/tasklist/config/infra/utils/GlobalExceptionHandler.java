@@ -9,11 +9,13 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with J-Tech.
  */
-package br.com.jtech.tasklist.config.infra.handlers;
+package br.com.jtech.tasklist.config.infra.utils;
 
 
 
 import br.com.jtech.tasklist.config.infra.exceptions.*;
+import br.com.jtech.tasklist.application.core.exceptions.DomainResourceNotFoundException;
+import br.com.jtech.tasklist.application.core.exceptions.DomainResourceAlreadyExists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,6 +56,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
+    @ExceptionHandler(DomainResourceNotFoundException.class)
+    public ResponseEntity<ApiError> handleResourceNotFound(DomainResourceNotFoundException ex) {
+        ApiError error = new ApiError(HttpStatus.NOT_FOUND);
+        error.setMessage("Resource not found");
+        error.setTimestamp(LocalDateTime.now());
+        error.setDebugMessage(ex.getLocalizedMessage());
+        return buildResponseEntity(error);
+    }
+
+    @ExceptionHandler(DomainResourceAlreadyExists.class)
+    public ResponseEntity<ApiError> handleResourceAlreadyExists(DomainResourceAlreadyExists ex) {
+        ApiError error = new ApiError(HttpStatus.CONFLICT);
+        error.setMessage("Resource already exists");
+        error.setTimestamp(LocalDateTime.now());
+        error.setDebugMessage(ex.getLocalizedMessage());
+        return buildResponseEntity(error);
+    }
 
     private List<ApiSubError> subErrors(MethodArgumentNotValidException ex) {
         List<ApiSubError> errors = new ArrayList<>();

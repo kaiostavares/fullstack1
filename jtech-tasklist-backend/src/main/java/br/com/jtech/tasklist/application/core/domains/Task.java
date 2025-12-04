@@ -15,12 +15,15 @@ package br.com.jtech.tasklist.application.core.domains;
 import br.com.jtech.tasklist.application.core.exceptions.DomainInvalidArgumentException;
 import lombok.*;
 
+import java.time.OffsetDateTime;
+
 @Getter
 @ToString
 public class Task extends AbstractDomainEntity {
     private String name;
     private String description;
     private TaskStatus status;
+    private OffsetDateTime createdAt;
 
     public Task() {
         super();
@@ -30,6 +33,7 @@ public class Task extends AbstractDomainEntity {
         setName(name);
         setDescription(description);
         setStatus(status);
+        this.createdAt = OffsetDateTime.now();
     }
 
     public Task(String id, String name, String description, TaskStatus status) {
@@ -37,6 +41,14 @@ public class Task extends AbstractDomainEntity {
         setName(name);
         setDescription(description);
         setStatus(status);
+    }
+
+    public Task(String id, String name, String description, TaskStatus status, OffsetDateTime createdAt) {
+        super(id);
+        setName(name);
+        setDescription(description);
+        setStatus(status);
+        this.createdAt = createdAt;
     }
 
     public void setName(String name) {
@@ -64,5 +76,9 @@ public class Task extends AbstractDomainEntity {
             throw new DomainInvalidArgumentException("error.task.status.null_or_empty");
         }
         this.status = status;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

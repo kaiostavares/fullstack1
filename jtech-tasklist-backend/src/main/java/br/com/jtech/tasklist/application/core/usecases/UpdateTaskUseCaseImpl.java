@@ -14,6 +14,7 @@ package br.com.jtech.tasklist.application.core.usecases;
  */
 import br.com.jtech.tasklist.application.core.exceptions.DomainResourceAlreadyExists;
 import br.com.jtech.tasklist.application.core.exceptions.DomainResourceNotFoundException;
+import br.com.jtech.tasklist.application.core.domains.Task;
 import br.com.jtech.tasklist.application.dto.task.UpdateTaskCommand;
 import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.ports.input.common.UpdateEntityUseCase;
@@ -26,13 +27,15 @@ public record UpdateTaskUseCaseImpl(
 
     @Override
     public TaskOutput execute(@Valid UpdateTaskCommand command) {
-        persistenteGateway.findById(command.id())
+        var existingTask = persistenteGateway.findById(command.id())
                 .orElseThrow(() -> new DomainResourceNotFoundException("error.task.not_found"));
 
         verifyIfTaskNameAlreadyExistsForOtherTask(command.name(), command.id());
         
-        var updatedTask = persistenteGateway.save(command.toEntity());
-        return new TaskOutput(updatedTask);
+        var updatedTask = new Task(command.id(), command.name(), command.description(), command.status());
+        updatedTask.setCreatedAt(existingTask.getCreatedAt());
+        var savedTask = persistenteGateway.save(updatedTask);
+        return new TaskOutput(savedTask);
     }
 
     private void verifyIfTaskNameAlreadyExistsForOtherTask(String name, String currentTaskId) {

@@ -10,12 +10,14 @@ public interface TaskPersistenceMapper extends BasePersistenceMapper<TaskEntity,
     
     @Override
     @Mapping(target = "id", expression = "java(domain.getId() != null ? java.util.UUID.fromString(domain.getId()) : null)")
-    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdAt", source = "domain.createdAt")
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     TaskEntity toEntity(Task domain);
     
     @Override
     @Mapping(target = "id", expression = "java(entity.getId() != null ? entity.getId().toString() : null)")
+    @Mapping(target = "createdAt", source = "entity.createdAt")
     Task toDomain(TaskEntity entity);
 }
+
