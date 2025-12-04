@@ -19,10 +19,7 @@ import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.ports.input.common.UpdateEntityUseCase;
 import br.com.jtech.tasklist.application.ports.output.TaskPersistenceGateway;
 import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;
 
-
-@Validated
 public record UpdateTaskUseCaseImpl(
         TaskPersistenceGateway persistenteGateway
 ) implements UpdateEntityUseCase<UpdateTaskCommand, TaskOutput> {
@@ -39,7 +36,7 @@ public record UpdateTaskUseCaseImpl(
     }
 
     private void verifyIfTaskNameAlreadyExistsForOtherTask(String name, String currentTaskId) {
-        persistenteGateway.findByName(name.toLowerCase())
+        persistenteGateway.findByName(name)
                 .ifPresent(task -> {
                     if (!task.getId().equals(currentTaskId)) {
                         throw new DomainResourceAlreadyExists("error.task.name.already_exists");

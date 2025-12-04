@@ -16,10 +16,7 @@ import br.com.jtech.tasklist.application.core.exceptions.DomainResourceNotFoundE
 import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.ports.input.common.FindEntityByIdUseCase;
 import br.com.jtech.tasklist.application.ports.output.TaskPersistenceGateway;
-import org.springframework.validation.annotation.Validated;
 
-
-@Validated
 public record FindTaskByIdUseCaseImpl(
         TaskPersistenceGateway persistenteGateway
 ) implements FindEntityByIdUseCase<TaskOutput> {

@@ -13,7 +13,7 @@
 package br.com.jtech.tasklist.adapters.input.protocols;
 
 import br.com.jtech.tasklist.application.core.domains.Task;
-import br.com.jtech.tasklist.adapters.output.repositories.entities.TasklistEntity;
+import br.com.jtech.tasklist.adapters.output.persistence.entities.TaskEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -46,14 +46,14 @@ public class TasklistResponse implements Serializable {
                 .build();
     }
 
-    public static TasklistResponse of(List<TasklistEntity> entities) {
+    public static TasklistResponse of(List<TaskEntity> entities) {
         var list = entities.stream().map(TasklistResponse::of).toList();
         return TasklistResponse.builder()
                 .responses(list)
                 .build();
     }
 
-    public static TasklistResponse of(TasklistEntity entity) {
+    public static TasklistResponse of(TaskEntity entity) {
         var response = new TasklistResponse();
         BeanUtils.copyProperties(entity, response);
         return response;

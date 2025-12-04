@@ -1,9 +1,11 @@
 package br.com.jtech.tasklist.application.core.domains;
 
 import br.com.jtech.tasklist.application.core.exceptions.DomainInvalidArgumentException;
+import lombok.Getter;
 
 import java.util.Objects;
 
+@Getter
 public abstract class AbstractDomainEntity {
     private String id;
 
@@ -13,10 +15,6 @@ public abstract class AbstractDomainEntity {
 
     public AbstractDomainEntity(String id) {
         setId(id);
-    }
-
-    public String getId() {
-        return id;
     }
 
     public void setId(String id) {

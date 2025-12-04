@@ -72,7 +72,7 @@ class CreateTaskUseCaseImplTest {
         assertThat(result.getDescription()).isEqualTo("Task Description");
         assertThat(result.getStatus()).isEqualTo(TaskStatus.PENDING);
 
-        verify(persistenceGateway).findByName("new task");
+        verify(persistenceGateway).findByName("New Task");
         verify(persistenceGateway).save(any(Task.class));
     }
 
@@ -95,13 +95,13 @@ class CreateTaskUseCaseImplTest {
                 .isInstanceOf(DomainResourceAlreadyExists.class)
                 .hasMessage("error.task.name.already_exists");
 
-        verify(persistenceGateway).findByName("existing task");
+        verify(persistenceGateway).findByName("Existing Task");
         verify(persistenceGateway, never()).save(any(Task.class));
     }
 
     @Test
-    @DisplayName("Should convert task name to lowercase when checking for duplicates")
-    void shouldConvertNameToLowercaseWhenChecking() {
+    @DisplayName("Should check for duplicates using original name (case-insensitive check done in repository)")
+    void shouldCheckForDuplicatesUsingOriginalName() {
         // Given
         CreateTaskCommand command = new CreateTaskCommand(
                 "New TASK",
@@ -118,6 +118,6 @@ class CreateTaskUseCaseImplTest {
         createTaskUseCase.execute(command);
 
         // Then
-        verify(persistenceGateway).findByName("new task");
+        verify(persistenceGateway).findByName("New TASK");
     }
 }

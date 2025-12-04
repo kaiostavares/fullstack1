@@ -1,11 +1,11 @@
 package br.com.jtech.tasklist;
 
-import br.com.jtech.tasklist.application.core.domains.Task;
-import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@EnableJpaAuditing(dateTimeProviderRef = "dateTimeProvider")
 public class StartTasklist {
 
 	public static void main(String[] args) {

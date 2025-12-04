@@ -78,7 +78,7 @@ class UpdateTaskUseCaseImplTest {
         assertThat(result.getStatus()).isEqualTo(TaskStatus.IN_PROGRESS);
 
         verify(persistenceGateway).findById(taskId);
-        verify(persistenceGateway).findByName("updated task");
+        verify(persistenceGateway).findByName("Updated Task");
         verify(persistenceGateway).save(any(Task.class));
     }
 
@@ -122,7 +122,7 @@ class UpdateTaskUseCaseImplTest {
         Task anotherTask = new Task("550e8400-e29b-41d4-a716-446655440002", "Existing Task Name", "Description", TaskStatus.PENDING);
 
         when(persistenceGateway.findById(taskId)).thenReturn(Optional.of(existingTask));
-        when(persistenceGateway.findByName("existing task name")).thenReturn(Optional.of(anotherTask));
+        when(persistenceGateway.findByName("Existing Task Name")).thenReturn(Optional.of(anotherTask));
 
         // When/Then
         assertThatThrownBy(() -> updateTaskUseCase.execute(command))
@@ -130,7 +130,7 @@ class UpdateTaskUseCaseImplTest {
                 .hasMessage("error.task.name.already_exists");
 
         verify(persistenceGateway).findById(taskId);
-        verify(persistenceGateway).findByName("existing task name");
+        verify(persistenceGateway).findByName("Existing Task Name");
         verify(persistenceGateway, never()).save(any(Task.class));
     }
 
@@ -150,7 +150,7 @@ class UpdateTaskUseCaseImplTest {
         Task updatedTask = new Task(taskId, "Same Task Name", "Updated Description", TaskStatus.IN_PROGRESS);
 
         when(persistenceGateway.findById(taskId)).thenReturn(Optional.of(existingTask));
-        when(persistenceGateway.findByName("same task name")).thenReturn(Optional.of(existingTask));
+        when(persistenceGateway.findByName("Same Task Name")).thenReturn(Optional.of(existingTask));
         when(persistenceGateway.save(any(Task.class))).thenReturn(updatedTask);
 
         // When
@@ -161,7 +161,7 @@ class UpdateTaskUseCaseImplTest {
         assertThat(result.getId()).isEqualTo(taskId);
 
         verify(persistenceGateway).findById(taskId);
-        verify(persistenceGateway).findByName("same task name");
+        verify(persistenceGateway).findByName("Same Task Name");
         verify(persistenceGateway).save(any(Task.class));
     }
 }

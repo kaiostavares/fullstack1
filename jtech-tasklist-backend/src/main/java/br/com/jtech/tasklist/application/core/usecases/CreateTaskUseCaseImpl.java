@@ -18,10 +18,7 @@ import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.ports.input.common.CreateEntityUseCase;
 import br.com.jtech.tasklist.application.ports.output.TaskPersistenceGateway;
 import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;
 
-
-@Validated
 public record CreateTaskUseCaseImpl (
         TaskPersistenceGateway persistenteGateway
 ) implements CreateEntityUseCase<CreateTaskCommand, TaskOutput> {
@@ -35,7 +32,7 @@ public record CreateTaskUseCaseImpl (
     }
 
     private void verifyIfTaskNameAlreadyExists(String name) {
-        persistenteGateway.findByName(name.toLowerCase())
+        persistenteGateway.findByName(name)
                 .ifPresent(task -> {
                     throw new DomainResourceAlreadyExists("error.task.name.already_exists");
                 });

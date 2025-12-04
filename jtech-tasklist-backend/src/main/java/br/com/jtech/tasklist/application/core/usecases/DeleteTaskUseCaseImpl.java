@@ -15,10 +15,7 @@ package br.com.jtech.tasklist.application.core.usecases;
 import br.com.jtech.tasklist.application.core.exceptions.DomainResourceNotFoundException;
 import br.com.jtech.tasklist.application.ports.input.common.DeleteEntityUseCase;
 import br.com.jtech.tasklist.application.ports.output.TaskPersistenceGateway;
-import org.springframework.validation.annotation.Validated;
 
-
-@Validated
 public record DeleteTaskUseCaseImpl(
         TaskPersistenceGateway persistenteGateway
 ) implements DeleteEntityUseCase {
