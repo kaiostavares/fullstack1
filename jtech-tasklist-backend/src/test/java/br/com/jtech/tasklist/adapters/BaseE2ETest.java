@@ -28,7 +28,7 @@ public abstract class BaseE2ETest {
         registry.add("spring.jpa.database-platform", () -> "org.hibernate.dialect.PostgreSQLDialect");
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "none");
         registry.add("spring.flyway.enabled", () -> "true");
-        registry.add("spring.flyway.locations", () -> "classpath:db.migration");
+        registry.add("spring.flyway.locations", () -> "classpath:db/migration");
         registry.add("spring.datasource.hikari.maximum-pool-size", () -> "10");
         registry.add("spring.datasource.hikari.connection-timeout", () -> "60000");
     }

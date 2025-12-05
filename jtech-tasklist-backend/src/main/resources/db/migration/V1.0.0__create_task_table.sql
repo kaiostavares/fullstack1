@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS tasks;
 
 CREATE TABLE tasks (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL ,
     status VARCHAR(50) NOT NULL,
