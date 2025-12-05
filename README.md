@@ -60,3 +60,200 @@ A **JTech** busca identificar profissionais que demonstrem sólido conhecimento 
 ---
 
 **Boa sorte! A JTech está ansiosa para conhecer sua solução.**
+
+---
+
+## 📚 Documentação dos Projetos
+
+Este repositório contém a solução completa do desafio, dividida em frontend e backend:
+
+### Backend (API REST)
+📖 **[Documentação Completa do Backend →](./jtech-tasklist-backend/README.md)**
+
+Stack: Java 21 + Spring Boot 3.5.5 + PostgreSQL + Flyway + JUnit
+
+### Frontend (Interface Web)
+📖 **[Documentação Completa do Frontend →](./jtech-tasklist-frontend/README.md)**
+
+Stack: Vue 3 + TypeScript + Tailwind CSS + Pinia + Vite
+
+---
+
+## 🚀 Como Rodar o Projeto Completo
+
+### Opção 1: Docker Compose (Recomendado)
+
+Rodar toda a stack (PostgreSQL + Backend + Frontend) com um único comando:
+
+```bash
+# Na raiz do projeto
+docker-compose up -d
+```
+
+**Acessos:**
+- Frontend: http://localhost
+- Backend API: http://localhost:8081
+- Swagger UI: http://localhost:8081/swagger-ui.html
+
+**Parar os serviços:**
+```bash
+docker-compose down
+```
+
+**Reconstruir as imagens:**
+```bash
+docker-compose up -d --build
+```
+
+### Opção 2: Execução Local (Desenvolvimento)
+
+#### 1. Inicie o Backend
+
+```bash
+# Terminal 1 - Backend
+cd jtech-tasklist-backend
+
+# Suba o PostgreSQL
+docker-compose -f composer/docker-compose.yml up -d
+
+# Execute a aplicação
+./gradlew bootRun
+```
+
+Backend disponível em: http://localhost:8081
+
+#### 2. Inicie o Frontend
+
+```bash
+# Terminal 2 - Frontend
+cd jtech-tasklist-frontend
+
+# Instale as dependências (primeira vez)
+npm install
+
+# Crie o arquivo .env.local
+echo "VITE_API_BASE_URL=http://localhost:8081/api/v1" > .env.local
+
+# Execute em modo desenvolvimento
+npm run dev
+```
+
+Frontend disponível em: http://localhost:5173
+
+---
+
+## 🏗️ Arquitetura da Solução
+
+```
+fullstack1/
+├── jtech-tasklist-backend/      # API REST
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/            # Código-fonte Java
+│   │   │   └── resources/       # Configurações e migrations
+│   │   └── test/                # Testes unitários e E2E
+│   ├── composer/                # Docker Compose configs
+│   └── README.md                # 📖 Documentação do Backend
+│
+├── jtech-tasklist-frontend/     # Interface Web
+│   ├── src/
+│   │   ├── components/          # Componentes Vue
+│   │   ├── views/               # Páginas
+│   │   ├── stores/              # Pinia stores
+│   │   ├── services/            # Integração com API
+│   │   └── router/              # Rotas Vue Router
+│   ├── docs/                    # Screenshots
+│   └── README.md                # 📖 Documentação do Frontend
+│
+└── docker-compose.yml           # Orquestração completa
+```
+
+---
+
+## ✅ Funcionalidades Implementadas
+
+### Backend
+- ✅ CRUD completo de tarefas
+- ✅ Validação de dados com Bean Validation
+- ✅ Soft delete (exclusão lógica)
+- ✅ Paginação e ordenação
+- ✅ Tratamento global de erros
+- ✅ Migrations com Flyway
+- ✅ Testes unitários e E2E (96 testes)
+- ✅ Documentação Swagger/OpenAPI
+- ✅ CORS configurado
+- ✅ Docker ready
+
+### Frontend
+- ✅ Interface responsiva e moderna
+- ✅ CRUD completo com modais
+- ✅ Filtros por status (ALL, PENDING, IN_PROGRESS, COMPLETED)
+- ✅ Paginação (5 itens por página)
+- ✅ Sistema de notificações (Toast)
+- ✅ Confirmação de ações destrutivas
+- ✅ Tratamento de erros da API
+- ✅ Página 404 customizada
+- ✅ TypeScript com tipagem forte
+- ✅ State management com Pinia
+- ✅ Docker ready
+
+---
+
+## 🧪 Executar Testes
+
+### Backend
+
+```bash
+cd jtech-tasklist-backend
+
+# Todos os testes (unitários + integração + E2E)
+./gradlew test
+
+# Apenas testes unitários
+./gradlew unitTest
+
+# Apenas testes de integração
+./gradlew integrationTest
+```
+
+### Frontend
+
+```bash
+cd jtech-tasklist-frontend
+
+# Testes unitários
+npm run test:unit
+
+# Type checking
+npm run type-check
+```
+
+---
+
+## 🔧 Tecnologias Utilizadas
+
+### Backend
+- Java 21
+- Spring Boot 3.5.5
+- Spring Data JPA + Hibernate
+- PostgreSQL 15
+- Flyway
+- MapStruct
+- Lombok
+- JUnit 5 + Mockito + TestContainers
+- Swagger/OpenAPI
+
+### Frontend
+- Vue 3.5 (Composition API)
+- TypeScript 5.6
+- Vite 7.2
+- Vue Router 4.5
+- Pinia 3.0
+- Axios
+- Tailwind CSS 4.1
+- Google Material Icons
+
+### DevOps
+- Docker & Docker Compose
+- Multi-stage builds
+- Nginx (frontend)

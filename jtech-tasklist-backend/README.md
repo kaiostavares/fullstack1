@@ -315,7 +315,7 @@ docker-compose -f composer/docker-compose.yml restart
 
 ## Licença
 
-Propriedade J-Tech Soluções em Informática
+Propriedade J-Tech
 
 ---
 
