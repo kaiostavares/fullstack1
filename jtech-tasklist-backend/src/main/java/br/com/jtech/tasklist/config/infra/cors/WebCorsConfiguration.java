@@ -37,7 +37,8 @@ public class WebCorsConfiguration {
         config.setAllowedOrigins(Arrays.asList(
             "http://localhost:5173",  // Vite dev server
             "http://localhost:3000",  // React/Next.js comum
-            "http://localhost:8080"   // Outra porta comum
+            "http://localhost:8080",  // Outra porta comum
+            "http://localhost"        // Frontend no Docker (porta 80)
         ));
         
         // Headers permitidos

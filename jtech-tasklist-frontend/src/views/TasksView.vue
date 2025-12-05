@@ -188,7 +188,7 @@ function getStatusLabel(status: string) {
     <!-- Main Content -->
     <div class="max-w-6xl mx-auto">
       <!-- Loading State -->
-      <div v-if="taskStore.loading && tasks.length === 0" class="flex flex-col items-center justify-center py-20">
+      <div v-if="taskStore.loading && taskStore.tasks.length === 0" class="flex flex-col items-center justify-center py-20">
         <div class="w-12 h-12 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin mb-4"></div>
         <p class="text-gray-600 font-medium">Carregando tasks...</p>
       </div>
