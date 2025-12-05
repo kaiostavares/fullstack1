@@ -5,9 +5,12 @@ import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.dto.task.UpdateTaskCommand;
 import br.com.jtech.tasklist.application.ports.input.common.CreateEntityUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.DeleteEntityUseCase;
+import br.com.jtech.tasklist.application.ports.input.common.FindAllEntitiesUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.FindEntityByIdUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.UpdateEntityUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,6 +24,7 @@ public class TaskFacade {
     private final CreateEntityUseCase<CreateTaskCommand, TaskOutput> createTaskUseCase;
     private final UpdateEntityUseCase<UpdateTaskCommand, TaskOutput> updateTaskUseCase;
     private final FindEntityByIdUseCase<TaskOutput> findTaskByIdUseCase;
+    private final FindAllEntitiesUseCase<TaskOutput> findAllTasksUseCase;
     private final DeleteEntityUseCase deleteTaskUseCase;
 
     /**
@@ -51,6 +55,16 @@ public class TaskFacade {
      */
     public TaskOutput findTaskById(String taskId) {
         return findTaskByIdUseCase.execute(taskId);
+    }
+
+    /**
+     * Busca todas as tarefas com paginação.
+     *
+     * @param pageable parâmetros de paginação
+     * @return Page contendo as tarefas encontradas
+     */
+    public Page<TaskOutput> findAllTasks(Pageable pageable) {
+        return findAllTasksUseCase.execute(pageable);
     }
 
     /**

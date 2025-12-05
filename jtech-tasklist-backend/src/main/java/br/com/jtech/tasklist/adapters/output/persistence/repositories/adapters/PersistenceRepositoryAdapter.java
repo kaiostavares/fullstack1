@@ -6,6 +6,8 @@ import br.com.jtech.tasklist.adapters.output.persistence.repositories.jpa.BaseJp
 import br.com.jtech.tasklist.application.core.domains.AbstractDomainEntity;
 import br.com.jtech.tasklist.application.core.domains.Task;
 import br.com.jtech.tasklist.application.ports.output.PersistenteGateway;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -43,5 +45,11 @@ public abstract class PersistenceRepositoryAdapter<E extends AbstractEntity, D e
         } else {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Page<D> findAll(Pageable pageable) {
+        Page<E> entities = this.getDefaultRepository().findAllByDeletedFalse(pageable);
+        return entities.map(this.getDefaultMapper()::toDomain);
     }
 }

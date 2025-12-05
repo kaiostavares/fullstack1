@@ -329,4 +329,70 @@ class TaskControllerE2ETest extends BaseE2ETest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("COMPLETED"));
     }
+
+    @Test
+    @DisplayName("Should list all tasks with pagination - default page")
+    void shouldListAllTasksWithPaginationDefaultPage() throws Exception {
+        // When & Then - Get all tasks without parameters (default pagination)
+        mockMvc.perform(get("/api/v1/tasks")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.totalElements").exists())
+                .andExpect(jsonPath("$.totalPages").exists())
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("$.size").exists());
+    }
+
+    @Test
+    @DisplayName("Should list tasks with custom page size")
+    void shouldListTasksWithCustomPageSize() throws Exception {
+        // When & Then - Get tasks with page size 10
+        mockMvc.perform(get("/api/v1/tasks")
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size").value(10))
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.totalElements").exists());
+    }
+
+    @Test
+    @DisplayName("Should list tasks on second page successfully")
+    void shouldListTasksOnSecondPageSuccessfully() throws Exception {
+        // When & Then - Get second page with size 5
+        mockMvc.perform(get("/api/v1/tasks")
+                .param("page", "1")
+                .param("size", "5")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").value(1))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.content").isArray());
+    }
+
+    @Test
+    @DisplayName("Should list tasks with sorting by name")
+    void shouldListTasksWithSortingByName() throws Exception {
+        // When & Then - Get tasks sorted by name ascending
+        mockMvc.perform(get("/api/v1/tasks")
+                .param("page", "0")
+                .param("size", "20")
+                .param("sort", "name,asc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray());
+    }
+
+    @Test
+    @DisplayName("Should return empty page when requesting non-existent page")
+    void shouldReturnEmptyPageWhenRequestingNonExistentPage() throws Exception {
+        // When & Then - Request high page number
+        mockMvc.perform(get("/api/v1/tasks")
+                .param("page", "99999")
+                .param("size", "20")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

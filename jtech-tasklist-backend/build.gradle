@@ -83,6 +83,7 @@ task integrationTest(type: Test) {
 	
 	// Inclui apenas testes de integração
 	include '**/*IntegrationTest.class'
+	include '**/*E2ETest.class'
 	include '**/*IT.class'
 	include '**/adapters/output/persistence/**'
 }

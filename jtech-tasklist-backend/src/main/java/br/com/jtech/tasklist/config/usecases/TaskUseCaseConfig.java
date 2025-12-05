@@ -3,6 +3,7 @@ package br.com.jtech.tasklist.config.usecases;
 import br.com.jtech.tasklist.adapters.output.persistence.repositories.adapters.TaskRepositoryAdapter;
 import br.com.jtech.tasklist.application.core.usecases.CreateTaskUseCaseImpl;
 import br.com.jtech.tasklist.application.core.usecases.DeleteTaskUseCaseImpl;
+import br.com.jtech.tasklist.application.core.usecases.FindAllTasksUseCaseImpl;
 import br.com.jtech.tasklist.application.core.usecases.FindTaskByIdUseCaseImpl;
 import br.com.jtech.tasklist.application.core.usecases.UpdateTaskUseCaseImpl;
 import br.com.jtech.tasklist.application.dto.task.CreateTaskCommand;
@@ -10,6 +11,7 @@ import br.com.jtech.tasklist.application.dto.task.TaskOutput;
 import br.com.jtech.tasklist.application.dto.task.UpdateTaskCommand;
 import br.com.jtech.tasklist.application.ports.input.common.CreateEntityUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.DeleteEntityUseCase;
+import br.com.jtech.tasklist.application.ports.input.common.FindAllEntitiesUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.FindEntityByIdUseCase;
 import br.com.jtech.tasklist.application.ports.input.common.UpdateEntityUseCase;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,13 @@ public class TaskUseCaseConfig {
     }
 
     @Bean
+    public FindAllEntitiesUseCase<TaskOutput> findAllEntitiesUseCase(){
+        return new FindAllTasksUseCaseImpl(taskRepositoryAdapter);
+    }
+
+    @Bean
     public DeleteEntityUseCase deleteEntityUseCase(){
         return new DeleteTaskUseCaseImpl(taskRepositoryAdapter);
     }
 }
+

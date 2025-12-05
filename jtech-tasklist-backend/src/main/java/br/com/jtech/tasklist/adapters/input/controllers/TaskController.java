@@ -19,6 +19,8 @@ import br.com.jtech.tasklist.adapters.input.mapper.TaskInputMapper;
 import br.com.jtech.tasklist.adapters.input.facades.TaskFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +78,19 @@ public class TaskController {
     public ResponseEntity<TaskResponse> findById(@PathVariable String id) {
         var output = taskFacade.findTaskById(id);
         var response = taskInputMapper.toResponse(output);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Lista todas as tarefas com paginação.
+     *
+     * @param pageable parâmetros de paginação (page, size, sort)
+     * @return página contendo as tarefas encontradas
+     */
+    @GetMapping
+    public ResponseEntity<Page<TaskResponse>> findAll(Pageable pageable) {
+        var output = taskFacade.findAllTasks(pageable);
+        var response = output.map(taskInputMapper::toResponse);
         return ResponseEntity.ok(response);
     }
     
